@@ -30,7 +30,7 @@ Diabetic retinopathy is a complication of diabetes, caused by high blood sugar l
 
 https://www.nhs.uk/conditions/diabetic-retinopathy/#:~:text=Diabetic%20retinopathy%20is%20a%20complication,it%20could%20threaten%20your%20sight.
 
- large set of high-resolution retina images taken under a variety of imaging conditions. A left and right field is provided for every subject. Images are labeled with a subject id as well as either left or right (e.g. 1_left.jpeg is the left eye of patient id 1).
+ large set of high-resolution retina images (jpeg) taken under a variety of imaging conditions. A left and right field is provided for every subject. Images are labeled with a subject id as well as either left or right (e.g. 1_left.jpeg is the left eye of patient id 1).
 
 A clinician has rated the presence of diabetic retinopathy in each image on a scale of 0 to 4, according to the following scale:
 
@@ -47,9 +47,17 @@ A clinician has rated the presence of diabetic retinopathy in each image on a sc
 https://www.kaggle.com/c/diabetic-retinopathy-detection#description
 
 ### Resnet Network
+A residual neural network (ResNet) is an artificial neural network (ANN). Residual neural networks utilize skip connections, or shortcuts to jump over some layers.
+There are two main reasons to add skip connections: to avoid the problem of vanishing gradients, or to mitigate the Degradation (accuracy saturation) problem; where adding more layers to a suitably deep model leads to higher training error.
+
+https://en.wikipedia.org/wiki/Residual_neural_network
 ### Pytorch & Dataloader
+Code for processing data samples can get messy and hard to maintain; we ideally want our dataset code to be decoupled from our model training code for better readability and modularity. PyTorch provides two data primitives: `torch.utils.data.DataLoader` and `torch.utils.data.Dataset` that allow you to use pre-loaded datasets as well as your own data. 
+
+Dataset stores the samples and their corresponding labels, and DataLoader wraps an iterable around the Dataset to enable easy access to the samples.
 
 ## Experiment Stages
+Implementation details will also be included here
 ### Details of my model (Resnet) 
 ### Details of my Dataloader
 ### Describing my evaluation matrix through the confusion matrix
@@ -57,6 +65,10 @@ https://www.kaggle.com/c/diabetic-retinopathy-detection#description
 ### Highest testing accuracy
 #### Screenshots
 #### Stuff I want to present
+Some thoughts: No DR to Proliferative DR classification, rather than being independent classifier such as 'dog','sheep','cat', that is 
+
+
+https://www.intellspot.com/data-types/
 ### Comparison Figures
 #### Plotting Comparison Figures (Res 18/50, with/without pretraining)
 ## Disscussion
