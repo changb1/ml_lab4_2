@@ -24,8 +24,8 @@ ml_lab4_2 report
 
   Lab 4-2 is about diabetic retinopathy analysis, using a customized dataloader by us to load data into a resnet network, which is implemented by Pytorch framework.
 After training the networks (details provided later), evaluation said network by confusion matrices.
-Will provide some brief introduction on the following topic: Diabetic Retinopathy & Dataset, Resnet Network, Pytorch and Dataloader
-### Diabetic Retinopathy & Dataset
+Will provide some brief introduction on the following topic: Diabetic Retinopathy & Dataset (input/output), Resnet Network & Transfer Learning (method), Pytorch and Dataloader (implementation)
+### Diabetic Retinopathy & Dataset (input/output)
 Diabetic retinopathy is a complication of diabetes, caused by high blood sugar levels damaging the back of the eye (retina). It can cause blindness if left undiagnosed and untreated.
 
 https://www.nhs.uk/conditions/diabetic-retinopathy/#:~:text=Diabetic%20retinopathy%20is%20a%20complication,it%20could%20threaten%20your%20sight.
@@ -46,19 +46,39 @@ A clinician has rated the presence of diabetic retinopathy in each image on a sc
 
 https://www.kaggle.com/c/diabetic-retinopathy-detection#description
 
-### Resnet Network
+### Resnet Network & Transfer Learning (method)
 A residual neural network (ResNet) is an artificial neural network (ANN). Residual neural networks utilize skip connections, or shortcuts to jump over some layers.
-There are two main reasons to add skip connections: to avoid the problem of vanishing gradients, or to mitigate the Degradation (accuracy saturation) problem; where adding more layers to a suitably deep model leads to higher training error.
+There are two main reasons to add skip connections: to avoid the problem of vanishing gradients, or to mitigate the Degradation (accuracy saturation) problem; where adding more layers to a suitably deep model leads to higher training error. Resnet 50 and 18 will be compared in the following results.
+
+We will also be comparing the effects of whether or not transfer learning is used. Transfer learning is a machine learning method where we reuse a pre-trained model as the starting point for a model on a new task. Focuses on storing knowledge gained while solving one problem and applying it to a different but related problem, like using network that classifies cats to another one that classifies trucks. 
 
 https://en.wikipedia.org/wiki/Residual_neural_network
-### Pytorch & Dataloader
+### Pytorch & Dataloader (implementation)
 Code for processing data samples can get messy and hard to maintain; we ideally want our dataset code to be decoupled from our model training code for better readability and modularity. PyTorch provides two data primitives: `torch.utils.data.DataLoader` and `torch.utils.data.Dataset` that allow you to use pre-loaded datasets as well as your own data. 
 
 Dataset stores the samples and their corresponding labels, and DataLoader wraps an iterable around the Dataset to enable easy access to the samples.
 
 ## Experiment Stages
 Implementation details will also be included here
-### Details of my model (Resnet) 
+### Details of my model (Resnet)
+```
+from torchvision import models
+import torch.nn as nn
+model = models.resnet50(pretrained=True)
+model.fc = nn.Sequential(nn.Linear(2048,256),
+                         nn.ReLU(inplace=True),
+                         nn.Linear(256,128),
+                         nn.ReLU(inplace=True),
+                         nn.Linear(128,64),
+                         nn.ReLU(inplace=True),
+                         nn.Linear(64,5),    
+                    )
+print(model)
+model = model.to(device)
+```
+`model = models.resnet50(pretrained=True)` Downloads pretrained (pretrained=True) model pretrained on Imagenet dataset
+`model.fc = nn.Sequential(nn.Linear(2048,256),...` reinitialized specific layers, replace the Final layer of pretrained resnet to fit output of 5 labels, (2048 will be 512 for resnet18)
+`model = model.to(device)` move model to device (GPU)
 ### Details of my Dataloader
 ### Describing my evaluation matrix through the confusion matrix
 ## Experimental Results
