@@ -78,12 +78,95 @@ model = model.to(device)
 ```
 `model = models.resnet50(pretrained=True)` Downloads pretrained (pretrained=True) model pretrained on Imagenet dataset
 `model.fc = nn.Sequential(nn.Linear(2048,256),...` reinitialized specific layers, replace the Final layer of pretrained resnet to fit output of 5 labels, (2048 will be 512 for resnet18)
+
 `model = model.to(device)` move model to device (GPU)
+
+Resnet Architecture:
 ![alt text](https://github.com/changb1/ml_lab4_2/blob/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202022-04-26%20161706.png "Res Architecture")
+Final layer Adjustments, seen by printing the model:
 ![alt text](https://github.com/changb1/ml_lab4_2/blob/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202022-04-26%20161849.png "Adjusted layers")
 
 ### Details of my Dataloader
+```
+import skimage.io as sk
+import pandas as pd
+from torch.utils import data
+import numpy as np
+
+from torchvision import transforms
+from PIL import Image
+image_transform = transforms.Compose([transforms.Resize([512,512]),
+                                      transforms.ToTensor(),
+                                      transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))]) 
+import torch
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu') #Use GPU if it's available or else use CPU.
+print(device) #Prints the device we're using
+print(torch.cuda.get_device_name(0))
+def getData(mode):
+    if mode == 'train':
+        img = pd.read_csv('train_img.csv')
+        label = pd.read_csv('train_label.csv')
+        return np.squeeze(img.values), np.squeeze(label.values)
+    else:
+        img = pd.read_csv('test_img.csv')
+        label = pd.read_csv('test_label.csv')
+        return np.squeeze(img.values), np.squeeze(label.values)
+
+class RetinopathyLoader(data.Dataset):
+    def __init__(self, root,image_transform, mode):
+        self.root = root
+        self.img_name, self.label = getData(mode)
+        self.image_transform = image_transform
+        self.mode = mode
+        print("> Found %d images..." % (len(self.img_name)))
+
+    def __len__(self):
+        return len(self.img_name)
+
+    def __getitem__(self, index):
+        path = self.root + '/'+ self.img_name[index] + '.jpeg'
+        img = Image.open(f'{path}')
+        gt_label = self.label[index]
+        if self.image_transform :
+            img = self.image_transform(img)
+        return img, gt_label
+```
+ - RetinopathyLoader
+   - init : intilize RetinopathyLoader 
+     - root (string): Root path of the dataset. 
+     - mode : Indicate procedure status(training or testing)
+     - self.img_name (string list): String list that store all image names.
+     - self.label (int or float list): Numerical list that store all ground truth label values.
+   - len : return the size of dataset
+   - getitem:
+     - `path = self.root + '/'+ self.img_name[index] + '.jpeg'`step1-1: Get the image path 
+     - `img = Image.open(f'{path}')`step1-2: load image (used PIL Image here)
+     - `gt_label = self.label[index]`step2: Get the ground truth label from self.label 
+     - `if self.image_transform : img = self.image_transform(img)`step3: Transform the .jpeg rgb images during the training phase, details in image_transform sector of the report
+     - `return img, gt_label`step4: Return processed image and label
+
+ - getData : fetch img_name and label for RetinopathyLoader
+ - image_transform
+
+`from torchvision import transforms` using transforms from torchvision
+```
+image_transform = transforms.Compose([transforms.Resize([512,512]),
+                                      transforms.ToTensor(),
+                                      transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
+```
+  `Resize()`: resize image
+  
+  `ToTensor()`: Convert a `PIL Image`(PIL in this case) or `numpy.ndarray` to tensor
+  
+  `Normalize()` a tensor image with mean and standard deviation Given mean: `(mean[1],...,mean[n])` and std: `(std[1],..,std[n])` for n channels
+
 ### Describing my evaluation matrix through the confusion matrix
+```
+
+
+```
+
 ## Experimental Results
 ### Highest testing accuracy
 #### Screenshots
