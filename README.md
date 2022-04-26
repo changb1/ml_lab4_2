@@ -242,10 +242,11 @@ Plotted results(from example of a result from pretrained resnet18)::
 ### Highest testing accuracy
 #### Screenshots
 #### Stuff I want to present
-Some thoughts: No DR to Proliferative DR classification, rather than being independent classifier such as 'dog','sheep','cat', that is 
 
 
 https://www.intellspot.com/data-types/
 ### Comparison Figures
 #### Plotting Comparison Figures (Res 18/50, with/without pretraining)
 ## Disscussion
+Some thoughts: Samples (images) are classified from No DR to Proliferative DR, 5 distinctive classification of qualitative data, rather than being nominal data (pure labeling variables, without any type of quantitative value) which machine learning methods used in this lab 4-2 excels at classifying, No DR to Proliferative DR seems to be more of orderly fashion, should be classified Ordinal data. Method of training proposed here discounted the fact that labels are in order, for example Mild misclassfied as Moderate is a better result than Mild misclassfied as Servere. Sure you can still train and better great performance, but in order to gain an extra mile, I think adjusting ML in accordance to the fact labels are in orderly fashion (Ordinal data) will be the right direction to take.
+https://www.intellspot.com/data-types/
