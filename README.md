@@ -235,7 +235,7 @@ heatmap.xaxis.set_ticklabels(heatmap.xaxis.get_ticklabels(), rotation=45, ha='ri
 plt.ylabel('True label')
 plt.xlabel('Predicted label')
 ```
-Plotted results(from example of a result from pretrained resnet18)::
+Plotted results(from example of a result from pretrained resnet18):
 ![alt text](https://github.com/changb1/ml_lab4_2/blob/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202022-04-26%20161706.png "Res Architecture")
 
 ## Experimental Results
@@ -248,5 +248,8 @@ https://www.intellspot.com/data-types/
 ### Comparison Figures
 #### Plotting Comparison Figures (Res 18/50, with/without pretraining)
 ## Disscussion
-Some thoughts: Samples (images) are classified from No DR to Proliferative DR, 5 distinctive classification of qualitative data, rather than being nominal data (pure labeling variables, without any type of quantitative value) which machine learning methods used in this lab 4-2 excels at classifying, No DR to Proliferative DR seems to be more of orderly fashion, should be classified Ordinal data. Method of training proposed here discounted the fact that labels are in order, for example Mild misclassfied as Moderate is a better result than Mild misclassfied as Servere. Sure you can still train and better great performance, but in order to gain an extra mile, I think adjusting ML in accordance to the fact labels are in orderly fashion (Ordinal data) will be the right direction to take.
-https://www.intellspot.com/data-types/
+Some thoughts: Samples (images) are classified from No DR to Proliferative DR, 5 distinctive classification of qualitative data, rather than being nominal data (pure labeling variables, without any type of quantitative value) which machine learning methods used in this lab 4-2 excels at classifying, No DR to Proliferative DR seems to be more of orderly fashion, should be classified Ordinal data. Method of training proposed here discounted the fact that labels are in order, for example Mild misclassfied as Moderate is a better result than Mild misclassfied as Servere. Sure you can still train and better great performance, but in order to gain an extra mile, to get better results I think adjusting ML in accordance to the fact labels are in orderly fashion (Ordinal data) will be the right direction to take.
+
+Types of data:
+![alt text](https://github.com/changb1/ml_lab4_2/blob/main/Types-of-Data-Infographic.png "Data grid")
+by https://www.intellspot.com/data-types/
