@@ -139,12 +139,15 @@ class RetinopathyLoader(data.Dataset):
      - self.img_name (string list): String list that store all image names.
      - self.label (int or float list): Numerical list that store all ground truth label values.
    - len : return the size of dataset
-   - getitem:
+   - getitem : 
      - `path = self.root + '/'+ self.img_name[index] + '.jpeg'`step1-1: Get the image path 
      - `img = Image.open(f'{path}')`step1-2: load image (used PIL Image here)
      - `gt_label = self.label[index]`step2: Get the ground truth label from self.label 
      - `if self.image_transform : img = self.image_transform(img)`step3: Transform the .jpeg rgb images during the training phase, details in image_transform sector of the report
      - `return img, gt_label`step4: Return processed image and label
+   - code usage example for feeding training data, change mode to test for testing data
+     - `train_set = RetinopathyLoader(root='./data',mode='train',image_transform=image_transform)`
+     - `train_loader = data.DataLoader(dataset=train_set, batch_size=4, shuffle=True)`
 
  - getData : fetch img_name and label for RetinopathyLoader
  - image_transform
@@ -160,12 +163,79 @@ image_transform = transforms.Compose([transforms.Resize([512,512]),
   `ToTensor()`: Convert a `PIL Image`(PIL in this case) or `numpy.ndarray` to tensor
   
   `Normalize()` a tensor image with mean and standard deviation Given mean: `(mean[1],...,mean[n])` and std: `(std[1],..,std[n])` for n channels
+example of a transformed image(test sample), plot results by pyplot:
+```
+import matplotlib.pyplot as plt
+train_features, train_labels = next(iter(train_loader))
+print(f"Feature batch shape: {train_features.size()}")
+print(f"Labels batch shape: {train_labels.size()}")
+img = train_features[0].squeeze()
+label = train_labels[0]
+im=transforms.ToPILImage()(img).convert("RGB")
+display(im)
+print(im)
+print(im.size)
+```
+![alt text](https://github.com/changb1/ml_lab4_2/blob/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202022-04-26%20161706.png "Res Architecture")
 
 ### Describing my evaluation matrix through the confusion matrix
+using seaborn heatmap to generate confusion matrix
 ```
+import pandas as pd
+import seaborn as sns
+from sklearn.metrics import confusion_matrix
+nb_classes = 5
+confusion_matrix = np.zeros((nb_classes, nb_classes))
+with torch.no_grad():
+    for i, (inputs, classes) in enumerate(test_loader):
+        inputs = inputs.to(device)
+        classes = classes.to(device)
+        outputs = model(inputs)
+        _, preds = torch.max(outputs, 1)
+        for t, p in zip(classes.view(-1), preds.view(-1)):
+                confusion_matrix[t.long(), p.long()] += 1
+
+plt.figure(figsize=(15,10))
+
+class_names = ['0','1','2','3','4']
+df_cm = pd.DataFrame(confusion_matrix, index=class_names, columns=class_names).astype(int)
+heatmap = sns.heatmap(df_cm, annot=True, fmt="d")
+
+heatmap.yaxis.set_ticklabels(heatmap.yaxis.get_ticklabels(), rotation=0, ha='right',fontsize=15)
+heatmap.xaxis.set_ticklabels(heatmap.xaxis.get_ticklabels(), rotation=45, ha='right',fontsize=15)
+plt.ylabel('True label')
+plt.xlabel('Predicted label')
+```
+Enumerates through test_loader, feeds results into model and counting up the total one by one in confuction matrix, plot results by pyplot
+```
+with torch.no_grad():
+    for i, (inputs, classes) in enumerate(test_loader):
+        inputs = inputs.to(device)
+        classes = classes.to(device)
+        outputs = model(inputs)
+        _, preds = torch.max(outputs, 1)
+        for t, p in zip(classes.view(-1), preds.view(-1)):
+                confusion_matrix[t.long(), p.long()] += 1
+```
+Plotted results:
+![alt text](https://github.com/changb1/ml_lab4_2/blob/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202022-04-26%20161706.png "Res Architecture")
 
 
+
+A version adjusted to show distribtion by percentage
 ```
+plt.figure(figsize=(15,10))
+
+df_cm=df_cm/df_cm.to_numpy().sum()
+heatmap = sns.heatmap(df_cm, annot=True)
+
+heatmap.yaxis.set_ticklabels(heatmap.yaxis.get_ticklabels(), rotation=0, ha='right',fontsize=15)
+heatmap.xaxis.set_ticklabels(heatmap.xaxis.get_ticklabels(), rotation=45, ha='right',fontsize=15)
+plt.ylabel('True label')
+plt.xlabel('Predicted label')
+```
+Plotted results:
+![alt text](https://github.com/changb1/ml_lab4_2/blob/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202022-04-26%20161706.png "Res Architecture")
 
 ## Experimental Results
 ### Highest testing accuracy
