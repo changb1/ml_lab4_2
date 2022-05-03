@@ -180,7 +180,7 @@ display(im)
 print(im)
 print(im.size)
 ```
-![alt text](https://github.com/changb1/ml_lab4_2/blob/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202022-04-26%20161706.png "Res Architecture")
+![alt text](https://github.com/changb1/ml_lab4_2/blob/main/example.png "Example")
 
 ### Describing my evaluation matrix through the confusion matrix
 using seaborn heatmap to generate confusion matrix, A confusion matrix is a summary of prediction results on a classification problem.
