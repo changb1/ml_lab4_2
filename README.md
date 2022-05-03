@@ -18,6 +18,10 @@ ml_lab4_2 report
     - Plotting Comparison Figures (Res 18/50, with/without pretraining)
 - Disscussion
 
+
+- link for github, README.md is the same report as this one
+  - https://github.com/changb1/ml_lab4_2/
+
 ---
 
 ## Introduction
