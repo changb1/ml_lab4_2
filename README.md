@@ -260,8 +260,17 @@ print('Accuracy: ',sum(acc))
     - sum of all true positive / (number of samples)
 ### Highest testing accuracy
 #### Screenshots
-#### Stuff I want to present
-
+ - precision/recall/accuracy of pretrained resnet18
+   - ![alt text](https://github.com/changb1/ml_lab4_2/blob/main/res18_a.png "pretrained resnet18")
+#### Stuff I want to present: others result
+ - precision/recall/accuracy of without pretrained resnet18
+   - ![alt text](https://github.com/changb1/ml_lab4_2/blob/main/res18_n_a.png "resnet18")
+ - precision/recall/accuracy of pretrained resnet50
+   - ![alt text](https://github.com/changb1/ml_lab4_2/blob/main/res50_a.png "resnet50")
+ - precision/recall/accuracy of without pretrained resnet50
+   
+ - Remarks:
+   - nan in precision caused by zero as divisor (no images being classified by resnet as this type), happens often in resnet without pretrain since most cases are "glued to the left", since a majority of cases are classified as "0", no pretrain heavily prefers it to others
 
 https://www.intellspot.com/data-types/
 ### Comparison Figures
@@ -295,3 +304,4 @@ Types of data:
 ![alt text](https://github.com/changb1/ml_lab4_2/blob/main/Types-of-Data-Infographic.png "Data grid")
 by https://www.intellspot.com/data-types/
 
+Second thought: Explaining the results: for no pretrain network training, a better solution will be "balancing" the sample size of cases (images), so certain labels ("0") doesn't heavily outnumber others, resulting in the network not training. Though resnet50 seems worse given similar amount of time to train, I think resnet50 will ultimately yield better end results if training is more completed, compared to resnet18. Though some fine tune will be needed.
