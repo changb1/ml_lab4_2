@@ -266,7 +266,7 @@ print('Accuracy: ',sum(acc))
 #### Screenshots
  - precision/recall/accuracy of pretrained resnet18
    - ![alt text](https://github.com/changb1/ml_lab4_2/blob/main/res18_a.png "pretrained resnet18")
-#### Stuff I want to present: others result
+#### Stuff I want to present: result of others
  - precision/recall/accuracy of without pretrained resnet18
    - ![alt text](https://github.com/changb1/ml_lab4_2/blob/main/res18_n_a.png "resnet18")
  - precision/recall/accuracy of pretrained resnet50
