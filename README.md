@@ -266,7 +266,7 @@ print('Accuracy: ',sum(acc))
  - precision/recall/accuracy of without pretrained resnet18
    - ![alt text](https://github.com/changb1/ml_lab4_2/blob/main/res18_n_a.png "resnet18")
  - precision/recall/accuracy of pretrained resnet50
-   - ![alt text](https://github.com/changb1/ml_lab4_2/blob/main/res50_a.png "resnet50")
+   - ![alt text](https://github.com/changb1/ml_lab4_2/blob/main/C_3.png "resnet50")
  - precision/recall/accuracy of without pretrained resnet50
    - ![alt text](https://github.com/changb1/ml_lab4_2/blob/main/res50_n_a.png "resnet50")
  - Remarks:
@@ -287,9 +287,9 @@ https://www.intellspot.com/data-types/
     - ![alt text](https://github.com/changb1/ml_lab4_2/blob/main/res18_np_2.png "resnet18")
  - Plotted results(pretrained resnet50):
     - confusion matrix by count
-    - ![alt text](https://github.com/changb1/ml_lab4_2/blob/main/res50_p_1.png "pretrained resnet50")
+    - ![alt text](https://github.com/changb1/ml_lab4_2/blob/main/C_1.png "pretrained resnet50")
     - confusion matrix by percentage
-    - ![alt text](https://github.com/changb1/ml_lab4_2/blob/main/res50_p_2.png "pretrained resnet50")
+    - ![alt text](https://github.com/changb1/ml_lab4_2/blob/main/C_2.png "pretrained resnet50")
  - Plotted results(without pretrain resnet50):
     - confusion matrix by count
     - ![alt text](https://github.com/changb1/ml_lab4_2/blob/main/res50_np_1.png "resnet50")
