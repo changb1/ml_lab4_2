@@ -268,7 +268,7 @@ print('Accuracy: ',sum(acc))
  - precision/recall/accuracy of pretrained resnet50
    - ![alt text](https://github.com/changb1/ml_lab4_2/blob/main/res50_a.png "resnet50")
  - precision/recall/accuracy of without pretrained resnet50
-   
+   - ![alt text](https://github.com/changb1/ml_lab4_2/blob/main/res50_n_a.png "resnet50")
  - Remarks:
    - nan in precision caused by zero as divisor (no images being classified by resnet as this type), happens often in resnet without pretrain since most cases are "glued to the left", since a majority of cases are classified as "0", no pretrain heavily prefers it to others
 
